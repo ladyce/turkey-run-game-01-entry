@@ -14,35 +14,42 @@ export function applyShotState(game, shot) {
   }
 
   if (shot === 'play') {
-    // Mid-run on stage 1: turkey near the middle of the farmyard, the
-    // farmer mid-chase with a visible cone, some corn already eaten.
+    // Mid-run in the KITCHEN (stage 3): the brief's core on screen at
+    // once — glowing ovens, sweeping carving knives, the farmer chasing
+    // with a visible cone, corn and feathers, full HUD.
     game.screen = 'play';
-    game.stageIndex = 0;
-    game.stage = buildStage(0, game.seed);
-    game.turkey = createTurkey(1500, 420);
+    game.stageIndex = 2;
+    game.stage = buildStage(2, game.seed);
+    game.turkey = createTurkey(1700, 430);
     game.turkey.facing = 1;
     game.turkey.walkCycle = 1.4;
     game.turkey.camX = 0;
-    game.cameraX = 860;
-    game.score = 2840;
-    game.distanceM = 412;
-    game.elapsed = 96;
-    game.lives = 3;
+    game.cameraX = 1040;
+    game.score = 9840;
+    game.distanceM = 1420;
+    game.elapsed = 268;
+    game.lives = 2;
     game.cornCollected = 6;
     game.feathersCollected = 1;
-    game.popups = [{ x: 1560, y: 360, text: '+100', life: 0.8, maxLife: 1 }];
+    game.popups = [{ x: 1760, y: 370, text: '+100', life: 0.8, maxLife: 1 }];
     const corn = game.stage.corns;
     for (let i = 0; i < 6 && i < corn.length; i++) corn[i].taken = true;
     if (game.stage.feathers[0]) game.stage.feathers[0].taken = true;
     // The farmer is right behind the turkey, chasing, cone on screen.
     const farmer = game.stage.farmers[0];
-    farmer.x = 1330;
-    farmer.y = 440;
+    farmer.x = 1520;
+    farmer.y = 450;
     farmer.state = FARMER_STATE.CHASE;
     farmer.alert = 1;
     farmer.facingAngle = 0;
     farmer.walkCycle = 2.2;
-    for (const knife of game.stage.knives) updateKnifeLane(knife, game.stage.width, 12);
+    // Second farmer patrols in view on the right (clear of the HUD panel).
+    const farmer2 = game.stage.farmers[1];
+    farmer2.x = 1980;
+    farmer2.y = 300;
+    farmer2.facingAngle = Math.PI;
+    farmer2.walkCycle = 1.1;
+    for (const knife of game.stage.knives) updateKnifeLane(knife, game.stage.width, 20);
     return;
   }
 
