@@ -117,7 +117,7 @@ export function drawHayBale(ctx, hay) {
 }
 
 export function drawOven(ctx, oven, time) {
-  const glow = 0.5 + Math.sin(time * 4 + oven.heatPhase) * 0.3;
+  const glow = 0.7 + Math.sin(time * 4 + oven.heatPhase) * 0.25;
   ctx.save();
   ctx.translate(oven.x, oven.y);
   // Body.
@@ -125,9 +125,11 @@ export function drawOven(ctx, oven, time) {
   ctx.fillRect(0, 0, oven.w, oven.h);
   ctx.fillStyle = '#2a2a33';
   ctx.fillRect(0, 0, oven.w, 12);
-  // Glowing door.
+  // Glowing door + bright core.
   ctx.fillStyle = `rgba(255, 122, 42, ${glow})`;
   ctx.fillRect(18, 28, oven.w - 36, 52);
+  ctx.fillStyle = `rgba(255, 214, 90, ${glow * 0.85})`;
+  ctx.fillRect(30, 40, oven.w - 60, 28);
   ctx.fillStyle = '#1a1a1a';
   ctx.fillRect(18, 28, oven.w - 36, 6);
   // Dials + handle.
